@@ -12,37 +12,17 @@ ds1=gdal.Open('band1.TIF')
 f = ds1.GetRasterBand(1).ReadAsArray()
 f = scaleMinMax(f)
 
-# ds2=gdal.Open('band2.TIF')
-# ds3=gdal.Open('band3.TIF')
-# ff = ds2.GetRasterBand(1).ReadAsArray()
-# fff = ds3.GetRasterBand(1).ReadAsArray()
 
-# ff = scaleMinMax(ff)
-# fff = scaleMinMax(fff)
-# allfff = np.dstack((f,ff,fff))
-# print(allfff)
-# plt.figure()
-# plt.imshow(allfff)
-# plt.show()
-
-# print('bands',ds.RasterCount,'rows',ds.RasterYSize,'columns',ds.RasterXSize)
+print('bands',ds1.RasterCount,'rows',ds1.RasterYSize,'columns',ds1.RasterXSize)
 plt.figure()
 plt.imshow(f)
 plt.show()
-# plt.figure()
-# plt.imshow(ff)
-# plt.show()
-# plt.figure()
-# plt.imshow(fff)
-# plt.show()
+
 # extracting each band and reading it as matrix
 #rgb:123
 r = ds.GetRasterBand(1).ReadAsArray()
 g = ds.GetRasterBand(2).ReadAsArray()
 b = ds.GetRasterBand(3).ReadAsArray()
-
-# print('bands',ds.RasterCount,'rows',ds.RasterYSize,'columns',ds.RasterXSize)
-# ds = None
 
 # scaling , Reason : float values should be between 0 and 1 (0 -255 for integers) ,
 # any values > than 1 are clipped to 1 so image get changed.
@@ -53,10 +33,7 @@ bMinMax = scaleMinMax(b)
 
 
 # Task1:visualize single band
-# plt.figure()
-# plt.imshow(rMinMax)
-# plt.imshow(gMinMax)
-# plt.show()
+
 
 # Task2:concatenate:
 # stacking all images upon each other
@@ -64,11 +41,6 @@ rgbMinMax = np.dstack((rMinMax,gMinMax,bMinMax))
 plt.figure()
 plt.imshow(rgbMinMax)
 plt.show()
-# Histogram
-# plt.figure()
-# plt.hist(rgbMinMax.flatten(),bins=50)
-# plt.show()
-# ds=None
 
 
 
