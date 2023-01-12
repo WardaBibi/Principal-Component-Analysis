@@ -8,28 +8,13 @@ def scaleMinMax(x):
 # def scaleCC(x):
 #     return((x - np.nanpercentile(x,2))/(np.nanpercentile(x,98) - np.nanpercentile(x,2)))
 ds = gdal.Open('full.tif')
-# ds1 = gdal.Open('band1.tif')
-# f1= ds1.GetRasterBand(1).ReadAsArray()
-# ds2 = gdal.Open('band2.tif')
-# f2= ds2.GetRasterBand(1).ReadAsArray()
-# ds3 = gdal.Open('band3.tif')
-# f3= ds3.GetRasterBand(1).ReadAsArray()
-# f1=scaleMinMax(f1)
-# f2=scaleMinMax(f2)
-# f3=scaleMinMax(f3)
-# allfff = np.dstack((f1,f2,f3))
-# print(allfff)
-# plt.figure()
-# plt.imshow(allfff)
-# plt.show()
+
 
 r = ds.GetRasterBand(1).ReadAsArray()
 g = ds.GetRasterBand(2).ReadAsArray()
 b = ds.GetRasterBand(3).ReadAsArray()
 print('bands', ds.RasterCount, 'rows', ds.RasterYSize, 'columns', ds.RasterXSize)
-# print('bands',ds1.RasterCount,'rows',ds1.RasterYSize,'columns',ds1.RasterXSize)
-# print('bands',ds2.RasterCount,'rows',ds2.RasterYSize,'columns',ds2.RasterXSize)
-# print('bands',ds3.RasterCount,'rows',ds3.RasterYSize,'columns',ds3.RasterXSize)
+
 ds = None
 resultArray =[]
 rMinMax = scaleMinMax(r)
@@ -80,17 +65,7 @@ eigen_val,eigen_vec = np.linalg.eigh(Covariance)
 print("\n\n Eigen Values are  \n ",eigen_val)
 print("\n\n Eigen Vectors are \n ",eigen_vec)
 
-#sorting
-# def sortArray(arr):
-#      for i in range(len(arr)):
-#          for j in range (i+1,len(arr)):
-#              if(arr[i] < arr[j]):
-#                  temp = arr[i]
-#                  arr[i] = arr[j]
-#                  arr[j] = temp
-#      return arr
-# SortedEigVal = sortArray(eigen_val)
-# print('\nSorted eigen values are \n ',SortedEigVal)
+
 sorted_index = np.argsort(eigen_val)[::-1]
 sortedEigVal = eigen_val[sorted_index]
 sortedEigenVectors = eigen_vec[:,sorted_index]
@@ -101,21 +76,6 @@ nComponents = 3
 principalComp = sortedEigenVectors[:,0:nComponents]
 # X_Meaned=X_Meaned[:,0:nComponents]
 reducedMatrix = np.dot(principalComp.transpose(), X_Meaned.transpose()).transpose()
-# x=1041
-# y=1024
-# pro= x*y
-# pro= nComponents*nComponents
-# # pro=pro/3
-# pro=int(pro)
-# for i in range(2,pro+1):
-#     if((pro%(i*3))==0):
-#         row=(pro/(i*3))
-#         col=i
-#         if(abs(row-col)==17):
-#          print("The smallest divisor is:",i)   # print the Smallest divisor
-#          break
-# row=int(row)
-# reducedMatrix_reshaped=reducedMatrix.reshape(row,col,3)
 
 reducedMatrix_reshaped=reducedMatrix.reshape(1041,1024,3)
 reducedMatrix_reshaped=scaleMinMax(reducedMatrix_reshaped)
